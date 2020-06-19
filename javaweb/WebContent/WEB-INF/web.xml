@@ -9,4 +9,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+   <!-- 초기화 파라미터 설정 -->
+  <context-param>
+  	<description>MySQL의 URL</description>
+  	<param-name>url</param-name>
+  	<param-value>jdbc:mysql://192.168.0.51:3306/sample?useUnicode=true</param-value>
+  </context-param>
+
+  <session-config>
+  	<session-timeout>3</session-timeout>
+  </session-config>
+
+  
+    <!-- 404 에러가 발생한 경우 보여질 페이지를 설정
+  web.xml 파일에서 /로 시작하면 WebContent에서부터의 경로 -->
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/exception/error/error404.jsp</location>
+  </error-page>
+  
 </web-app>
