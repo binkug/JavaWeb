@@ -1,8 +1,10 @@
-package kr.co.pk.blkin.domain;
+package domain;
 
 import java.sql.Date;
 
 public class Blkin {
+	//클라이언트용 프로그램이면 속성 앞의 접근 지장자를 public으로 하고
+	//생성자만 만들고 접근자 메소드는 만들지 않아도 됩니다.
 	private int member_num;
 	private String member_email;
 	private String member_password;
@@ -11,23 +13,22 @@ public class Blkin {
 	private Float member_kg;
 	private Date member_birthday;
 	private String member_image;
+	private String member_content;
 	private String islogin;
 	private Date logindate;
 	private String isremove;
 	
 	
 	
-	//매개변수가 없는 생성자
 	public Blkin() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	//매개변수가 있는 생성자
-	//이미 데이터가 존재하는 경우 set을 호출하지 않고 한번에 초기화 할 목적으로 생성
+	
 	public Blkin(int member_num, String member_email, String member_password, String member_gender, String member_name,
-			Float member_kg, Date member_birthday, String member_image, String islogin, Date logindate,
-			String isremove) {
+			Float member_kg, Date member_birthday, String member_image, String member_content, String islogin,
+			Date logindate, String isremove) {
 		super();
 		this.member_num = member_num;
 		this.member_email = member_email;
@@ -37,11 +38,13 @@ public class Blkin {
 		this.member_kg = member_kg;
 		this.member_birthday = member_birthday;
 		this.member_image = member_image;
+		this.member_content = member_content;
 		this.islogin = islogin;
 		this.logindate = logindate;
 		this.isremove = isremove;
 	}
 	
+
 	public int getMember_num() {
 		return member_num;
 	}
@@ -90,6 +93,12 @@ public class Blkin {
 	public void setMember_image(String member_image) {
 		this.member_image = member_image;
 	}
+	public String getMember_content() {
+		return member_content;
+	}
+	public void setMember_content(String member_content) {
+		this.member_content = member_content;
+	}
 	public String getIslogin() {
 		return islogin;
 	}
@@ -108,14 +117,16 @@ public class Blkin {
 	public void setIsremove(String isremove) {
 		this.isremove = isremove;
 	}
-	
-	
+
+
 	@Override
 	public String toString() {
 		return "Blkin [member_num=" + member_num + ", member_email=" + member_email + ", member_password="
 				+ member_password + ", member_gender=" + member_gender + ", member_name=" + member_name + ", member_kg="
-				+ member_kg + ", member_birthday=" + member_birthday + ", member_image=" + member_image + ", islogin="
-				+ islogin + ", logindate=" + logindate + ", isremove=" + isremove + "]";
+				+ member_kg + ", member_birthday=" + member_birthday + ", member_image=" + member_image
+				+ ", member_content=" + member_content + ", islogin=" + islogin + ", logindate=" + logindate
+				+ ", isremove=" + isremove + "]";
 	}
+	
 	
 }
