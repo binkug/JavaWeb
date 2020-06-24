@@ -105,9 +105,11 @@ public class BlkinDao {
 				blkin.setMember_num(rs.getInt("Member_num"));
 				blkin.setMember_name(rs.getString("member_name"));
 				blkin.setMember_email(rs.getString("member_email"));
+				blkin.setMember_birthday(rs.getDate("member_birthday"));
+				blkin.setMember_gender(rs.getString("member_gender"));
 				//리스트에 삽입
 				list.add(blkin);
-				
+				System.out.println("dao: "+blkin);
 				
 			}
 			//결과 사용
@@ -267,7 +269,7 @@ public class BlkinDao {
 		List<Blkin> list = new ArrayList<Blkin>();
 		connect();
 		try {
-			pstmt = con.prepareStatement("select * from member limit ?,?");
+			pstmt = con.prepareStatement("select * from user limit ?,?");
 			//데이터 시작번호는 페이지번호-1 에 데이터개수를 곱한것
 			pstmt.setInt(1, (pageno-1)*perpagecnt);
 			//가져올 데이터 개수는 페이지당 출력 할 데이터 개수
@@ -276,11 +278,15 @@ public class BlkinDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Blkin blkin = new Blkin();
-				blkin.setMember_num(rs.getInt("Member_num"));
-				blkin.setMember_name(rs.getString("member_name"));
+				blkin.setMember_num(rs.getInt("member_num"));
 				blkin.setMember_email(rs.getString("member_email"));
+				blkin.setMember_gender(rs.getString("member_gender"));
+				blkin.setMember_name(rs.getString("member_name"));
+				blkin.setMember_birthday(rs.getDate("member_birthday"));
+				blkin.setMember_content(rs.getString("member_content"));
 				
 				list.add(blkin);
+				System.out.println(blkin);
 			}
 			
 		}catch(Exception e) {

@@ -65,13 +65,10 @@ li {
 		</ul>
 	</div>
 	<div>
-		<h3 align="center">6일차 jsp 학습 0622</h3>
+		<h3 align="center">6일차 jsp 학습 0624</h3>
 		<ul type="square">
-			<li><a href="blkin/list">전체 데이터 조회</a></li>
+			<li><a href="blkin/blkinlist">전체 데이터 조회</a></li>
 			<li><a href="blkin/insert">삽입</a></li>
-			<li><a href="blkin/update">수정</a></li>
-			<li><a href="blkin/delete">삭제</a></li>
-
 		</ul>
 	</div>
 </body>

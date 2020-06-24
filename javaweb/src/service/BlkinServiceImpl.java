@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import dao.BlkinDao;
 import domain.Blkin;
 
@@ -46,8 +49,22 @@ public class BlkinServiceImpl implements BlkinService {
 		//3.호출한 Dao 메소드의 매개변수를 생성
 		
 		//4.Dao의 메소드를 호출해서 결과를 저장
+		//JSON 출력을 위해서 JSON 데이터 형식으로 변환
+		//List - > JSONArray
+		//DTO나 Map -> JSONObject
 		List<Blkin> list = blkinDao.list(pageno,perpagecnt);
-		System.out.println(list);
+		JSONArray ar = new JSONArray();
+		for(Blkin blkin : list) {
+			JSONObject obj = new JSONObject();
+			obj.put("member_num", blkin.getMember_num());
+			obj.put("member_email", blkin.getMember_email());
+			obj.put("member_gender", blkin.getMember_gender());
+			obj.put("member_name", blkin.getMember_name());
+			obj.put("member_birthday", blkin.getMember_birthday());
+			
+			ar.put(obj);
+		}
+		
 		
 		//전체 데이터 개수를 가져오기
 		int totalCount = blkinDao.getCount();
@@ -56,7 +73,10 @@ public class BlkinServiceImpl implements BlkinService {
 		//종료 페이지 번호를 임시로 계산
 		// 1 - 3, 2 - 3 , 12- 4 
 		int endPage = (int)(Math.ceil(pageno/3.0)*3.0);
-		int startPage = endPage - 2; 
+		//페이징에서는 뒤로 가는게 있어서 시작 페이지 번호가
+		//필요하지만 더보기 형태의 구현은 뒤로 가는게 없어서
+		//시작 페이지 번호가 필요 없습니다.
+		//int startPage = endPage - 9; 
 		
 		//전체 페이지 개수 구하기
 		int tempEndPage = (int)(Math.ceil(totalCount/(double)perpagecnt));
@@ -66,12 +86,15 @@ public class BlkinServiceImpl implements BlkinService {
 			}
 		
 		//이전과 다음 출력 여부 생성
-		boolean prev = startPage == 1 ? false : true;
+		//boolean prev = startPage == 1 ? false : true;
+			
+		//다음 데이터의 존재 여부를 위해서 있는 것이 좋음
 		boolean next = endPage * perpagecnt >= totalCount ? false : true;
 		//5.Dao 메소드 호출 결과를 View로 전달하기 위해서 request나 session에 저장
 		
 		//포워딩 할거면 request
 		//리다이렉트 할 거면 session
+		/*
 		request.setAttribute("list", list);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
@@ -80,7 +103,17 @@ public class BlkinServiceImpl implements BlkinService {
 		request.setAttribute("next", next);
 		//전체 데이터 개수
 		request.setAttribute("totalCount", totalCount);
-
+		*/
+		
+		//REST API 서버를 구현할 때는 JSONObject로 묶어서 1개만 저장
+		JSONObject result = new JSONObject();
+		result.put("pageno", pageno);
+		result.put("endpage", endPage);
+		result.put("next", next);
+		result.put("ar", ar);
+		System.out.println("impl : "+result);
+		//request에 저장
+		request.setAttribute("result", result);
 	}
 
 	@Override

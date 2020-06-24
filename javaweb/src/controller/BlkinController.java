@@ -58,6 +58,14 @@ public class BlkinController extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../blkinn/list.jsp");
 			dispatcher.forward(request, response);
 			
+		}else if(command.equals("/blkin/blkinlist")) {
+			//결과 페이지로 이동
+			//현재 요청이 /blkin/list 이므로 
+			// ../view/list.jsp이면
+			//WebContent/view/list.jsp가 됩니다.
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../blkinn/list2.jsp");
+			dispatcher.forward(request, response);
+			
 		}else if(command.equals("/blkin/insert")&& method.equals("GET")) {
 			//입력 페이지로 이동
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../blkinn/insert.jsp");
@@ -66,7 +74,7 @@ public class BlkinController extends HttpServlet {
 			blkinService.insert(request, response);
 			//삽입하고 결과 페이지로 이동
 			//작업을 수행했으므로 목록 보기로 리다이렉트
-			response.sendRedirect("list");
+			response.sendRedirect("blkinlist");
 		}else if(command.indexOf("/blkin/detail")>=0) {
 			//여기까지 오는지 확인 - 1번은 출력되고 이것은 출력 안되면 요청 페이지의 요청 URL 과 비교하는 URL 수정
 			System.out.println("2.detail :  "+command);
@@ -91,13 +99,13 @@ public class BlkinController extends HttpServlet {
 			//상세보기 처리
 			blkinService.update(request, response);
 
-			response.sendRedirect("../list");
+			response.sendRedirect("../blkinlist");
 		}else if(command.indexOf("/blkin/delete")>=0) {
 			
 			//데이터 삭제를 처리
 			blkinService.delete(request, response);
 			//페이지 이동
-			response.sendRedirect("../list");
+			response.sendRedirect("../blkinlist");
 		}
 	}
 
