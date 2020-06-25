@@ -13,7 +13,7 @@ import service.BlkinService;
 import service.BlkinServiceImpl;
 
 
-@WebServlet({ "/", "/blkin/*" })
+@WebServlet("/blkin/*")
 public class BlkinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
