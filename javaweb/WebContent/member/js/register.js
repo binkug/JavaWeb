@@ -46,7 +46,7 @@ window.addEventListener('load',function(event){
 				//email 중복 검사를 통과 했다고 표시
 				emailCheck = true;
 			}else{
-				emailmsg.innerHTML = "사용중 인 이메일";
+				emailmsg.innerHTML = "사용중인 이메일";
 				emailmsg.style.color = "red";
 				//email 중복 검사를 통과 못했다고 표시
 				emailCheck = false;
@@ -80,12 +80,54 @@ window.addEventListener('load',function(event){
 				
 			}else{
 				//메시지 출력
-				namemsg.innerHTML = '이미 사용 중 인  이름';
+				namemsg.innerHTML = '이미 사용중인  이름';
 				namemsg.style.color = 'red';
 				//표시
 				nameCheck = false;
 			}
 		});
+	});
+	
+	//회원가입 버튼을 누르면
+	registerbtn.addEventListener('click',function(event){
+		//폼의 데이터를 전송할 때는 유효성 검사를 해주어야 합니다.
+		//필수 항목 검사, 형식에 맞는지 , 값의 제한이 있는 경우 그 값인지 등
+		if(useremail.value.trim().length<1){
+			emailmsg.innerHTML = "이메일은 필수 항목입니다.";
+			emailmsg.style.color = "red";
+			return;
+		}
+		//형식 검사 - 정규식 사용
+		var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		if(emailRegExp.test(useremail.value) == false){
+			
+			emailmsg.innerHTML = "이메일 형식에 맞지 않습니다.";
+			emailmsg.style.color = "red";
+			return;
+		}
+		if(emailCheck == false){
+			emailmsg.innerHTML = "이미 가입된 이메일 입니다.";
+			emailmsg.style.color = "red";
+			return;
+		}
+		
+		
+		//ajax 요청
+		var request = new XMLHttpRequest();
+		//요청 생성
+		request.open('post','register',true);
+		//폼 데이터 생성
+		var formdata = new FormData(registerform);
+		//폼 데이터를 전송
+		request.send(formdata);
+		//데이터를 전송하고 결과를 받아 왔을 때
+		request.addEventListener('load',function(event){
+			var data = JSON.parse(event.target.responseText);
+			if(data.result == true){
+				location.href = "../"; //   ../은 항상 메인으로 이동하게 만드는 거
+			}
+		});
+			
 	});
 	
 });

@@ -28,12 +28,12 @@
 
 			<form id="registerform" class="input-group" enctype="multipart/form-data" >
 			<div id="msg">유효성 검사</div>
-				<input type="email" class="input-field" name="useremail" id="useremail" placeholder="Enter Email" required>
+				<input type="email" class="input-field" name="useremail" id="useremail" placeholder="Enter Email" >
 				<div id="emailmsg"></div>  
-				<input type="password"class="input-field" name="userpassword" placeholder="Enter Password" required>
+				<input type="password"class="input-field" name="userpassword" placeholder="Enter Password" >
 				<div id="passwordmsg"></div>
-				<input type="password"class="input-field" name="passwordchk" placeholder="Checked your Password" required>
-				<input type="text" class="input-field" name="username" id="username" placeholder="User name" required>
+				<input type="password"class="input-field" name="passwordchk" placeholder="Checked your Password" >
+				<input type="text" class="input-field" name="username" id="username" placeholder="User name" >
 				<div id="namemsg"></div>
 				<select name="usergender" class="input-field">
 				  <option value="남자">남자</option>
@@ -41,12 +41,13 @@
 				  <option value="기타" selected="selected">기타</option>
 				</select>
 				<input type="file" class="input-field" name="userimage" id="userimage">
-				<button class="submit" name="registerbtn">REGISTER</button>
+				
+				<button type="button" class="togglebtn" id="registerbtn"">REGISTER</button>
+				
 				<button class="submit" name="mainbtn" id="mainbtn" value="메인">main</button>
 				
 			</form>
 		</div>
 	</div>
-<!-- 이거임 -->
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import service.UserServiceImpl;
 
 
 @WebServlet({"/index.html","/user/*","/main/*"})
+@MultipartConfig(location = "C:\\Users\\30404\\Desktop\\upload")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,9 +44,15 @@ public class UserController extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/main.jsp");
 			dispatcher.forward(request, response);
 			
-		}else if(command.equals("/user/register")) {
+		}else if(command.equals("/user/register") && method.equals("GET")) {
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/register.jsp");
+			dispatcher.forward(request, response);
+			
+		}else if(command.equals("/user/register") && method.equals("POST")) {
+			//회원가입을 처리해주는 메소드를 호출
+			userService.register(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/registerresult.jsp");
 			dispatcher.forward(request, response);
 			
 		}else if(command.equals("/user/emailcheck")) {

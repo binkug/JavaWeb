@@ -10,4 +10,6 @@ public interface UserService {
 	public void emailCheck(HttpServletRequest request,HttpServletResponse response);
 	
 	public void nameCheck(HttpServletRequest request,HttpServletResponse response);
+	
+	public void register(HttpServletRequest request,HttpServletResponse response);
 }
