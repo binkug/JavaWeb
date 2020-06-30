@@ -1,6 +1,9 @@
 package service;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import dao.UserDao;
 import domain.User;
+import sun.net.www.protocol.http.HttpURLConnection;
 
 public class UserServiceImpl implements UserService {
 	
@@ -68,6 +72,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void nameCheck(HttpServletRequest request, HttpServletResponse response) {
+
 		//1. 파라미터 읽기
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -98,6 +103,7 @@ public class UserServiceImpl implements UserService {
 		//request 나 session에 저장한 이름
 		
 	}
+	
 	@Override
 	public void register(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -166,6 +172,93 @@ public class UserServiceImpl implements UserService {
 			
 		}catch(Exception e) {
 			System.out.println("service:" + e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void login(HttpServletRequest request, HttpServletResponse response) {
+		//System.out.println("유저 서비스");
+		//1.파라미터 읽기
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {
+			System.out.println("service login:" + e.getMessage());
+			e.printStackTrace();
+		}
+		String userEmail = request.getParameter("useremail");
+		String userPassword = request.getParameter("userpassword");
+		//2.필요한 처리
+		
+		//3.DAO 메소드를 호출해야 하면 DAO 메소드의 매개변수를 생성
+		
+		//4.DAO 메소드를 호출해서 결과를 저장
+		User user = userDao.login(userEmail);
+		//5.결과를 가지고 필요한 처리를 수행
+		if(user != null) {
+			//비밀번호 확인
+			if(BCrypt.checkpw(userPassword, user.getUserPassword())) {
+				//비밀번호가 일치하는 경우 - 비밀번호는 삭제
+				user.setUserPassword(null);
+			}else {
+				//비밀번호가 틀린 경우 user == null;
+				user = null;
+			}
+		}
+		
+		JSONObject object = new JSONObject();
+		if(user != null) {
+			object.put("usernum", user.getUserNum());
+			object.put("useremail", user.getUserEmail());
+			object.put("userpassword", user.getUserPassword());
+			object.put("username", user.getUserName());
+			object.put("userimage", user.getUserImage());
+			object.put("usergender", user.getUserGender());
+		}else {
+			object = null;
+		}
+		//6.요청 처리 결과를 저장
+		//System.out.println("t서비스 : "+object);
+		request.getSession().setAttribute("result", object);
+	}
+
+	@Override
+	public void proxy(HttpServletRequest request, HttpServletResponse response) {
+		//Java Application에서 구현할 때는 Thread 안에 구현하고
+		//Android Application에 구현할 때는 Thead 안에 구현하고
+		//화면에 표시할 때는 Handler를 이용하거나 Thead와 Handler의 조합인 AsyncTask를 이용
+		try {
+			//데이터를 가져올 URL을 생성
+			System.out.println("서비스");
+			URL url = new URL("http://www.weather.go.kr/weather/forecast/mid-term-xml.jsp?stnld=109");
+			//연결 객체를 생성
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			
+			//옵션을 설정
+			conn.setConnectTimeout(30000);
+			conn.setUseCaches(false);
+			//헤더 설정을 해야 하는 경우에는
+			//conn.setRequestProperty("헤더이름", "헤더 값");
+			
+			//post 전송이면
+			//conn.setRequestMethod("POST");
+			
+			//데이터 읽어오기
+			StringBuilder sb = new StringBuilder();
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			while(true) {
+				String line = br.readLine();
+				if(line == null) break;
+				sb.append(line + "\n");
+				//System.out.println(sb);
+			}
+			
+			br.close();
+			conn.disconnect();
+			request.setAttribute("result", sb.toString());
+		} catch (Exception e) {
+			System.out.println("service proxy:" + e.getMessage());
 			e.printStackTrace();
 		}
 		

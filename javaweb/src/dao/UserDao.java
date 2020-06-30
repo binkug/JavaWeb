@@ -87,4 +87,40 @@ public class UserDao extends AbstaractDao {
 		return result;
 	}
 	
+	//로그인 처리를 위한 메소드
+	public User login(String userEmail) {
+		System.out.println("dao");
+		//없는 아이디인 경우는 null을 리턴
+		User user = null;
+		connect();
+		
+		try {
+			//sql 만들기
+			//user 테이블에서 email을 가지고 데이터를 찾아오기
+			pstmt = con.prepareStatement("select * from user where user_email = ? ");
+			pstmt.setString(1, userEmail);
+			
+			//데이터 읽어서 저장
+			//sql 실행
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				user = new User();
+				user.setUserNum(rs.getInt("user_num"));
+				user.setUserEmail(rs.getString("user_email"));
+				user.setUserPassword(rs.getString("user_password"));
+				user.setUserGender(rs.getString("user_gender"));
+				user.setUserName(rs.getString("user_name"));
+				user.setUserImage(rs.getString("user_image"));
+				//System.out.println(user);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Dao login : "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+		close();
+		return user;
+	}
+	
 }

@@ -13,8 +13,18 @@ pageEncoding="UTF-8"%>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css" />
-
-
+<script>
+	//ajax 요청 객체 생성
+	var request = new XMLHttpRequest();
+	//ajax 요청 생성
+	request.open('get','../user/proxy', true);
+	//요청을 전송
+	request.send('');
+	//요청을 전송하고 응답이 오면 호출될 콜백 메소드 생성
+	request.addEventListener('load', function(event){
+		alert(event.target.responseText)
+	});
+</script>
 </head>
 <body class="is-preload homepage">
 	<div id="page-wrapper">
@@ -66,13 +76,14 @@ pageEncoding="UTF-8"%>
 					</div>
 					<div class="col-5 col-12-medium">
 						<ul>
-						<c:if test="${email == null}">
+						<c:if test="${result == null}">
 							<li><a href="${pageContext.request.contextPath}/user/register"
 								class="button large icon solid fa-arrow-circle-right">회원가입</a></li>
 							<li><a href="${pageContext.request.contextPath}/user/login"
 								class="button alt large icon solid fa-arrow-circle-right">로그인</a></li>
 						</c:if>
-						<c:if test="${email != null}">
+						<c:if test="${result != null}">
+							<li><a href="${pageContext.request.contextPath}/user/myinfo" class="button large icon solid fa-arrow-circle-right">님 어서오세요</a></li>
 							<li><a href="${pageContext.request.contextPath}/user/logout" class="button alt large icon solid fa-arrow-circle-right">로그아웃</a></li>
 						</c:if>
 						</ul>

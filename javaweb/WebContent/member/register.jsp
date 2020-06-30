@@ -6,8 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<!-- js/register.js 파일의 링크를 설정 -->
-<script src="js/register.js"></script>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/member/css/register.css">
 <script src="${pageContext.request.contextPath}/member/js/register.js"></script>
@@ -42,9 +40,9 @@
 				</select>
 				<input type="file" class="input-field" name="userimage" id="userimage">
 				
-				<button type="button" class="togglebtn" id="registerbtn"">REGISTER</button>
+				<button type="button" class="togglebtn" id="registerbtn" name = "registerbtn">REGISTER</button>
 				
-				<button class="submit" name="mainbtn" id="mainbtn" value="메인">main</button>
+				<button type="button" class="submit" name="mainbtn" id="mainbtn">main</button>
 				
 			</form>
 		</div>

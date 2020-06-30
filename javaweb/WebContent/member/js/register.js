@@ -110,24 +110,7 @@ window.addEventListener('load',function(event){
 			emailmsg.style.color = "red";
 			return;
 		}
-		
-		
-		//ajax 요청
-		var request = new XMLHttpRequest();
-		//요청 생성
-		request.open('post','register',true);
-		//폼 데이터 생성
-		var formdata = new FormData(registerform);
-		//폼 데이터를 전송
-		request.send(formdata);
-		//데이터를 전송하고 결과를 받아 왔을 때
-		request.addEventListener('load',function(event){
-			var data = JSON.parse(event.target.responseText);
-			if(data.result == true){
-				location.href = "../"; //   ../은 항상 메인으로 이동하게 만드는 거
-			}
-		});
-			
+				
 	});
 	
 });

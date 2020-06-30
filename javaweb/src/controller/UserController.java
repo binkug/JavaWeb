@@ -35,7 +35,7 @@ public class UserController extends HttpServlet {
 		String method = request.getMethod();
 		//요청을 맞게 작성했는지 확인
 		//완성되면 주석처리
-		System.out.println("요청주소 : "+command);
+		//System.out.println("요청주소 : "+command);
 		//시작할 때 Controller를 거치게 하는 이유는 사람들이 들어오고 어디서 그만 뒀는지 파악을 할 수 있기 때문에 Controller를 사용해야 한다. 
 		if(command.equals("/index.html")) {
 			response.sendRedirect("./");
@@ -64,8 +64,28 @@ public class UserController extends HttpServlet {
 			dispatcher.forward(request, response);
 			
 		}else if(command.equals("/user/namecheck")) {
+			
 			userService.nameCheck(request, response);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/namecheck.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/user/login") && method.equals("GET")) {
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/login.jsp");
+			dispatcher.forward(request, response);
+		}else if(command.equals("/user/login") && method.equals("POST")) {
+			
+			//로그인 처리를 위한 서비스 메소드 호출
+			//작업을 처리하는 경우에는 서비스의 메소드를 호출하는 것이고
+			//단순 페이지 이동은 서비스의 메소드를 호출하지 않ㅇ므
+			//정보 수정의 경우는 상세 데이터를 가져오고 수정
+			userService.login(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/loginresult.jsp");
+			dispatcher.forward(request, response);
+			
+		}else if(command.equals("/user/proxy") && method.equals("GET")) {
+			System.out.println("proxy cont");
+			userService.proxy(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("../member/proxy.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

@@ -25,10 +25,9 @@ loginform.addEventListener("submit",function(event) {
 		if (flag == true) {
 			event.preventDefault();
 		}
-		Kakao.Auth.authorize({
-			  redirectUri: 'http://developers.kakao.com/kakaoLogin.jsp'
-			});
-		Kakao.Auth.setAccessToken(ACCESS_TOKEN);
+		
+		
+		
 });
 
 

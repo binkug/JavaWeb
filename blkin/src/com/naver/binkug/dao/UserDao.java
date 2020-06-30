@@ -64,18 +64,27 @@ public class UserDao extends AbstaractDao {
 		close();
 		return result;
 	}
-	
-	public int insert(User user) {
+	//데이터 삽입을 위한 메소드
+	public int register(User user) {
 		int result = -1;
 		connect();		
 		try {
+			pstmt = con.prepareStatement("insert into user(user_email,user_password,user_gender,user_name,user_image)"
+					+ " values(?,?,?,?,?)");
+			pstmt.setString(1, user.getUserEmail());
+			pstmt.setString(2, user.getUserPassword());
+			pstmt.setString(3, user.getUserGender());
+			pstmt.setString(4, user.getUserName());
+			pstmt.setString(5, user.getUserImage());
 			
+			result = pstmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("dao insert : "+e.getMessage());
 			e.printStackTrace();
 		}
 		
 		close();
 		return result;
 	}
+	
 }

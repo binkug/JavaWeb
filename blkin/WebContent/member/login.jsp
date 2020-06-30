@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 <meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/member/css/login.css">
 <script type="text/javascript"src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"charset="utf-8"></script>
 </head>
 <body>
@@ -21,7 +21,7 @@
 					<div class="box_login">
 						<div class="inp_text">
 							<label for="email" class="screen_out">이메일</label> 
-							<input type="email" id="member_password" name=member_email placeholder="이메일을 입력하세요">
+							<input type="email" id="member_password" name= "member_email" placeholder="이메일을 입력하세요">
 						</div>
 						<div class="inp_text">
 							<label for="userpw" class="screen_out">비밀번호</label> 
@@ -54,7 +54,7 @@
 	</div>
 	
 </body>
-<script src="js/login.js"></script>
+<script src="${pageContext.request.contextPath}/member/js/login.js"></script>
 <script type="text/javascript">
 	var naverLogin = new naver.LoginWithNaverId(
 		{

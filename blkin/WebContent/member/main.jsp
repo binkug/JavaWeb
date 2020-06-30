@@ -47,7 +47,7 @@ pageEncoding="UTF-8"%>
 									</ul></li>
 								<li><a href="#">Veroeros feugiat</a></li>
 							</ul></li>
-						<li><a href="${pageContext.request.contextPath}/dashboard/main">대시 보드</a></li>
+						<li><a href="left-sidebar.html">대시 보드</a></li>
 						<li><a href="right-sidebar.html">Right Sidebar</a></li>
 						<li><a href="no-sidebar.html">No Sidebar</a></li>
 					</ul>
